@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:10.16-alpine
+    container_name: "db-django-school"
+    environment:
+      - POSTGRES_DB=school-django
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "7432:5432"
