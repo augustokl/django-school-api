@@ -4,14 +4,19 @@ from rest_framework.permissions import IsAuthenticated
 from school.models import Course, Student, Registration
 from school.serializers import CourseSerializer, StudentSerializer, \
                     RegistrationSerializer, ListRegistrationSerializer, \
-                    ListCourseStudentsSerializer
+                    ListCourseStudentsSerializer, StudentSerializerV2
 
 class StudentsViewSet(viewsets.ModelViewSet):
   """Show all students"""
   queryset = Student.objects.all()
-  serializer_class = StudentSerializer
   authentication_classes = [BasicAuthentication]
   permission_classes = [IsAuthenticated]
+
+  def get_serializer_class(self):
+    if self.request.version == 'v2':
+      return StudentSerializerV2
+      
+    return StudentSerializer
 
 
 class CoursesViewSet(viewsets.ModelViewSet):

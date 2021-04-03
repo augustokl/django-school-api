@@ -36,3 +36,10 @@ class ListCourseStudentsSerializer(serializers.ModelSerializer):
 
   def get_time_course(self, object):
     return object.get_time_course_display()
+
+  
+class StudentSerializerV2(serializers.ModelSerializer):
+  class Meta:
+    model = Student
+    fields = ['id', 'name', 'rg', 'cpf', 'birthday', 'celphone']
+
