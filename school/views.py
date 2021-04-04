@@ -1,5 +1,7 @@
 from rest_framework import viewsets, generics, status
 from rest_framework.response import Response
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from school.models import Course, Student, Registration
 from school.serializers import CourseSerializer, StudentSerializer, \
     RegistrationSerializer, ListRegistrationSerializer, \
@@ -40,6 +42,10 @@ class RegistrationsViewSet(viewsets.ModelViewSet):
     """Show all registration"""
     queryset = Registration.objects.all()
     serializer_class = RegistrationSerializer
+
+    @method_decorator(cache_page(20))
+    def dispatch(self, *args, **kwargs):
+        return super(RegistrationsViewSet, self).dispatch(*args, **kwargs)
 
 
 class ListRegistrationsViewSet(generics.ListAPIView):
